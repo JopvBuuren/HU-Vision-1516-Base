@@ -1,75 +1,95 @@
 #include "IntensityImageStudent.h"
 
 IntensityImageStudent::IntensityImageStudent() : IntensityImage() {
-	int throwError = 0, e = 1 / throwError; //Throws error without the need to include a header
-	//TODO: Nothing
+	std::cout << "IntensityImageStudent() is called!" << std::endl;
 }
 
 IntensityImageStudent::IntensityImageStudent(const IntensityImageStudent &other) : IntensityImage(other.getWidth(), other.getHeight()) {
-	int throwError = 0, e = 1 / throwError;
-	//TODO: Create a copy from the other object
+	std::cout << "IntensityImageStudent(IntensityImageStudent &other) is called!" << std::endl;
+	container = other.container;
 }
 
 IntensityImageStudent::IntensityImageStudent(const int width, const int height) : IntensityImage(width, height) {
-	int throwError = 0, e = 1 / throwError;
-	//TODO: Initialize pixel storage
+	std::cout << "IntensityImageStudent(width, height) is called!" << std::endl;
+	std::fflush;
+	int max = height * width;
+	for (int i = 0; i < max; i++){
+		container[i] = Intensity();
+	}
 }
 
 IntensityImageStudent::~IntensityImageStudent() {
-	int throwError = 0, e = 1 / throwError;
+	//int throwError = 0, e = 1 / throwError;
 	//TODO: delete allocated objects
 }
 
 void IntensityImageStudent::set(const int width, const int height) {
+	std::cout << "set(width, height) is called!" << std::endl;
+	std::vector<Intensity> tmpCont;
+	for (int y = 0; y < width; y++){
+		for (int x = 0; x < width; x++){
+			Intensity pixel = this->getPixel(x, y);
+			container[y * width + x] = pixel;
+		}
+	}
+	
 	IntensityImage::set(width, height);
-	int throwError = 0, e = 1 / throwError;
-	//TODO: resize or create a new pixel storage (Don't forget to delete the old storage)
+	container = tmpCont;
 }
 
 void IntensityImageStudent::set(const IntensityImageStudent &other) {
+	std::cout << "set(IntensityImageStudent &other) is called!" << std::endl;
+	int width = other.getWidth();
+	int height = other.getHeight();
+	std::vector<Intensity> tmpCont;
+	for (int y = 0; y < width; y++){
+		for (int x = 0; x < width; x++){
+			Intensity pixel = this->getPixel(x, y);
+			container[y * width + x] = pixel;
+		}
+	}
+	container = tmpCont;
 	IntensityImage::set(other.getWidth(), other.getHeight());
-	int throwError = 0, e = 1 / throwError;
-	//TODO: resize or create a new pixel storage and copy the object (Don't forget to delete the old storage)
 }
 
 void IntensityImageStudent::setPixel(int x, int y, Intensity pixel) {
-	int throwError = 0, e = 1 / throwError;
-	//TODO: no comment needed :)
+	if (y <= this->getHeight() && (x <= this->getWidth())){
+		int i = y * this->getWidth() + x;
+		container[i] = pixel;
+	}
+	else{
+		int throwError = 0, e = 1 / throwError;
+	}
 }
 
 void IntensityImageStudent::setPixel(int i, Intensity pixel) {
-	int throwError = 0, e = 1 / throwError;
-	/*
-	* TODO: set pixel i in "Row-Major Order"
-	*
-	*
-	* Original 2d image (values):
-	* 9 1 2
-	* 4 3 5
-	* 8 7 8
-	*
-	* 1d representation (i, value):
-	* i		value
-	* 0		9
-	* 1		1
-	* 2		2
-	* 3		4
-	* 4		3
-	* 5		5
-	* 6		8
-	* 7		7
-	* 8		8
-	*/
+	
+	if (i < container.size()){
+		container[i] = pixel;
+	}
+	else{
+		int throwError = 0, e = 1 / throwError;
+	}
 }
 
 Intensity IntensityImageStudent::getPixel(int x, int y) const {
-	int throwError = 0, e = 1 / throwError;
-	//TODO: no comment needed :)
-	return 0;
+	if (y <= this->getHeight() && (x <= this->getWidth())){
+		int i = y * this->getWidth() + x;
+		return container[i];
+		//return absolute black if x/y is out off bounds
+	}
+	else{
+		return Intensity(255);
+	}
 }
 
 Intensity IntensityImageStudent::getPixel(int i) const {
-	int throwError = 0, e = 1 / throwError;
-	//TODO: see setPixel(int i, RGB pixel)
-	return 0;
+	int max = this->getWidth() * this->getHeight();
+	if (i < max){
+		return container[i];
+	}
+	else{
+		//return absolute black if i is out off bounds
+		return Intensity(255);
+	}
 }
