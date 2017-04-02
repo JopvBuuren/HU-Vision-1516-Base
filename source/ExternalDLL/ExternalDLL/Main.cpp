@@ -9,6 +9,7 @@
 #include "HereBeDragons.h"
 #include "ImageFactory.h"
 #include "DLLExecution.h"
+#include <Windows.h>
 
 void drawFeatureDebugImage(IntensityImage &image, FeatureMap &features);
 bool executeSteps(DLLExecution * executor);
@@ -19,21 +20,24 @@ int main(int argc, char * argv[]) {
 	//ImageFactory::setImplementation(ImageFactory::STUDENT);
 
 
-	ImageIO::debugFolder = "D:\\Users\\Rolf\\Downloads\\FaceMinMin";
+	ImageIO::debugFolder = "test/1";
 	ImageIO::isInDebugMode = true; //If set to false the ImageIO class will skip any image save function calls
 
 
 
 
 	RGBImage * input = ImageFactory::newRGBImage();
-	if (!ImageIO::loadImage("D:\\Users\\Rolf\\Downloads\\TestA5.jpg", *input)) {
+	if (!ImageIO::loadImage("../male-2.png", *input)) {
 		std::cout << "Image could not be loaded!" << std::endl;
+		char buffer[1000];
+		GetModuleFileName(NULL, buffer, 1000);
+		std::cout << buffer << std::endl;
 		system("pause");
 		return 0;
 	}
 
 
-	ImageIO::saveRGBImage(*input, ImageIO::getDebugFileName("debug.png"));
+	ImageIO::saveRGBImage(*input, ImageIO::getDebugFileName("./debug.png"));
 
 	DLLExecution * executor = new DLLExecution(input);
 
