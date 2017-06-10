@@ -22,10 +22,7 @@ int main(int argc, char * argv[]) {
 
 	ImageIO::debugFolder = "test/1";
 	ImageIO::isInDebugMode = true; //If set to false the ImageIO class will skip any image save function calls
-
-
-
-
+	
 	RGBImage * input = ImageFactory::newRGBImage();
 	if (!ImageIO::loadImage("../male-2.png", *input)) {
 		std::cout << "Image could not be loaded!" << std::endl;
@@ -57,13 +54,6 @@ int main(int argc, char * argv[]) {
 
 
 
-
-
-
-
-
-
-
 bool executeSteps(DLLExecution * executor) {
 
 	//Execute the four Pre-processing steps
@@ -75,6 +65,7 @@ bool executeSteps(DLLExecution * executor) {
 	if (!executor->executePreProcessingStep2(false)) {
 		std::cout << "Pre-processing step 2 failed!" << std::endl;
 		return false;
+
 	}
 	ImageIO::saveIntensityImage(*executor->resultPreProcessingStep2, ImageIO::getDebugFileName("Pre-processing-2.png"));
 

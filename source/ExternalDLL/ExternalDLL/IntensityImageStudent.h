@@ -12,6 +12,7 @@ class IntensityImageStudent : public IntensityImage {
 public:
 	IntensityImageStudent();
 	IntensityImageStudent(const IntensityImageStudent &other);
+	IntensityImageStudent(const IntensityImage &other);
 	IntensityImageStudent(const int width, const int height);
 	~IntensityImageStudent();
 
@@ -26,4 +27,6 @@ public:
 
 private:
 	std::vector<Intensity> container;
+	Intensity * pixelmap;
+
 };
