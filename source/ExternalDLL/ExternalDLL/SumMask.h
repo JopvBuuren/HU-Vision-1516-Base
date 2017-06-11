@@ -4,18 +4,20 @@
 #include <math.h>
 #include "IntensityImage.h" 
 #include "IntensityImageStudent.h" 
-class Mask
+class SumMask
 {
 public:
-	Mask(std::vector<int> maskValues, int maskWidth);
-	~Mask();
+	SumMask(const std::vector<int> horizontalMask, const std::vector<int> verticalMask, int maskWidth);
+	~SumMask();
 
 	IntensityImageStudent *useMaskOn(const IntensityImage &image);
-
+	int getHighestValue(std::vector<int> mask);
 private:
 	int currentRow;
-	std::vector<int> maskValues;
+	std::vector<int> horizontalMask;
+	std::vector<int> verticalMask;
 	int maskWidth;
+	int threshold;
 
 };
 

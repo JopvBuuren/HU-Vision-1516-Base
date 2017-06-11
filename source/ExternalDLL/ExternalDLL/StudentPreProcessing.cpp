@@ -47,24 +47,19 @@ IntensityImage * StudentPreProcessing::stepScaleImage(const IntensityImage &imag
 }
 
 /* Swicth on methods, defined in header (config file would prevent rebuild)
-	1	
-	2
-	3
-	4
+	1	Laplacian
+	2	Laplacian Guassian
+	3	Sobel
 */
 IntensityImage * StudentPreProcessing::stepEdgeDetection(const IntensityImage &image) const {
 	switch (method){
-		case 0:
+		case 1:
 			// Laplacian
 			return stepLaplacian(image);
 			break;
-		case 1:
+		case 2:
 			// Laplacian + Guassian
 			return stepLaplacian(*stepGuassian(image));
-			break;
-		case 2:
-			// High pass filter
-			return stepHighPass(image);
 			break;
 		case 3:
 			// Sobel
@@ -109,9 +104,11 @@ IntensityImage * StudentPreProcessing::stepLaplacian(const IntensityImage &image
 IntensityImage * StudentPreProcessing::stepGuassian(const IntensityImage &image) const {
 	return nullptr;
 }
-IntensityImage * StudentPreProcessing::stepHighPass(const IntensityImage &image) const {
-	return nullptr;
-}
+
 IntensityImage * StudentPreProcessing::stepSobel(const IntensityImage &image) const {
-	return nullptr;
+	std::cout << "Using Sobel" << std::endl;
+	SumMask* mask = new SumMask(this->sobelMaskHor, this->sobelMaskVer, 3);
+	IntensityImageStudent* student_result = mask->useMaskOn(image);
+	IntensityImage * result = ImageFactory::newIntensityImage(*student_result);
+	return result;
 }

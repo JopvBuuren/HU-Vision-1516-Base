@@ -1,8 +1,6 @@
 #include "Mask.h"
 
-
-
-Mask::Mask(int maskValues[8], int maskWidth)
+Mask::Mask(std::vector<int> maskValues, int maskWidth)
 {
 	maskValues = maskValues;
 	maskWidth = maskWidth;
@@ -63,4 +61,3 @@ IntensityImageStudent *Mask::useMaskOn(const IntensityImage & image)
 	
 	return image2;
 }
-

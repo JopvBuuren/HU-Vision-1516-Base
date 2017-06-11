@@ -7,6 +7,7 @@
 #pragma once
 #include "PreProcessing.h"
 #include "Mask.h"
+#include "SumMask.h"
 #include "ImageFactory.h"
 class StudentPreProcessing : public PreProcessing {
 public:
@@ -17,9 +18,27 @@ public:
 
 	IntensityImage * stepLaplacian(const IntensityImage &image) const;
 	IntensityImage * stepGuassian(const IntensityImage &image) const;
-	IntensityImage * stepHighPass(const IntensityImage &image) const;
 	IntensityImage * stepSobel(const IntensityImage &image) const;
 private:
-	// current method
-	int method = 0;
+	/* current method
+		1	Laplacian
+		2	Laplacian Guassian
+		3	Sobel
+	*/
+	int method = 3;
+
+	// Default sobel masks
+	std::vector<int> sobelMaskHor = {
+		1, 0, -1,
+		2, 0, -2,
+		1, 0, -1
+	};
+	
+	std::vector<int> sobelMaskVer = { 
+		1, 2, 1,
+		0, 0, 0,
+		-1, -2, -1 
+	};
+
+	}
 };
