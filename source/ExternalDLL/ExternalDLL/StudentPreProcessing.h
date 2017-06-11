@@ -14,4 +14,12 @@ public:
 	IntensityImage * stepScaleImage(const IntensityImage &image) const;
 	IntensityImage * stepEdgeDetection(const IntensityImage &image) const;
 	IntensityImage * stepThresholding(const IntensityImage &image) const;
+
+	IntensityImage * stepLaplacian(const IntensityImage &image) const;
+	IntensityImage * stepGuassian(const IntensityImage &image) const;
+	IntensityImage * stepHighPass(const IntensityImage &image) const;
+	IntensityImage * stepSobel(const IntensityImage &image) const;
+private:
+	// current method
+	int method = 0;
 };

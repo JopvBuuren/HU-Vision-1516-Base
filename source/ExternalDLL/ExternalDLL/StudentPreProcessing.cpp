@@ -46,7 +46,37 @@ IntensityImage * StudentPreProcessing::stepScaleImage(const IntensityImage &imag
 
 }
 
+/* Swicth on methods, defined in header (config file would prevent rebuild)
+	1	
+	2
+	3
+	4
+*/
 IntensityImage * StudentPreProcessing::stepEdgeDetection(const IntensityImage &image) const {
+	switch (method){
+		case 0:
+			// Laplacian
+			return stepLaplacian(image);
+			break;
+		case 1:
+			// Laplacian + Guassian
+			return stepLaplacian(*stepGuassian(image));
+			break;
+		case 2:
+			// High pass filter
+			return stepHighPass(image);
+			break;
+		case 3:
+			// Sobel
+			return stepSobel(image);
+			break;
+		default:
+			std::cout << "Unknown chosen method: " << method << "!" << std::endl;
+			return nullptr;
+			break;
+	}
+
+	/*
 	//std::cout << "Test1";
 	int imageHight = image.getHeight();
 	int imageWidth = image.getWidth();
@@ -65,10 +95,23 @@ IntensityImage * StudentPreProcessing::stepEdgeDetection(const IntensityImage &i
 	std::cout << "Test3";
 	
 	IntensityImage * result = ImageFactory::newIntensityImage(*student_result);
-	return result;
+	*/
 
 }
 
 IntensityImage * StudentPreProcessing::stepThresholding(const IntensityImage &image) const {
+	return nullptr;
+}
+
+IntensityImage * StudentPreProcessing::stepLaplacian(const IntensityImage &image) const {
+	return nullptr;
+}
+IntensityImage * StudentPreProcessing::stepGuassian(const IntensityImage &image) const {
+	return nullptr;
+}
+IntensityImage * StudentPreProcessing::stepHighPass(const IntensityImage &image) const {
+	return nullptr;
+}
+IntensityImage * StudentPreProcessing::stepSobel(const IntensityImage &image) const {
 	return nullptr;
 }
