@@ -1,9 +1,11 @@
 #include "Mask.h"
+#include <iostream>
+#include <fstream>
 
 Mask::Mask(std::vector<int> maskValues, int maskWidth)
 {
-	maskValues = maskValues;
-	maskWidth = maskWidth;
+	this->maskValues = maskValues;
+	this->maskWidth = maskWidth;
 }
 
 
@@ -11,51 +13,57 @@ Mask::~Mask()
 {
 }
 
-IntensityImageStudent *Mask::useMaskOn(const IntensityImage & image)
+IntensityImage *Mask::useMaskOn(const IntensityImage & image, bool devideCal)
 {
-
+	using namespace std;
 	int imageWidth = image.getWidth();
-	int imageHight = image.getHeight();
+	int imageHeight = image.getHeight();
 
-	IntensityImageStudent * image2 = new IntensityImageStudent();
-	
-	for(int currentHight = 0; currentHight < imageHight; currentHight++)
+	IntensityImageStudent image2(image);
+
+	for (int currentHeight = 0; currentHeight < imageHeight; currentHeight++)
 	{
-		if ((currentHight + maskWidth)> imageHight) {
+		if ((currentHeight + maskWidth)> imageHeight) {
 			break;
 		}
-		int arr[8];
+
 		for (int currentWidth = 0; currentWidth < imageWidth; currentWidth++) {
-			
+
 			if ((currentWidth + maskWidth) > imageWidth) {
 				break;
 			}
 			int trackerY = 0;
+			int arr[9];
+			cout << " ch: " << currentHeight << " cw: " << currentWidth << endl;
 			for (int i = 0; i < maskWidth; i++) {
-				arr[(i * maskWidth)] = image.getPixel(currentWidth, currentHight + trackerY);
-				arr[(i * maskWidth) +1] = image.getPixel(currentWidth + 1, currentHight + trackerY);
-				arr[(i * maskWidth)+ 2] = image.getPixel(currentWidth + 2, currentHight + trackerY);
+				arr[(i * maskWidth)] = image.getPixel(currentWidth, currentHeight + trackerY);
+				arr[(i * maskWidth) + 1] = image.getPixel(currentWidth + 1, currentHeight + trackerY);
+				arr[(i * maskWidth) + 2] = image.getPixel(currentWidth + 2, currentHeight + trackerY);
 				trackerY++;
 			}
 
 			//Function calulate:
-			int calulation= 0;
-			for (int k = 0;k < 8; k++) {
-				calulation = calulation + (arr[k] * maskValues[k]);
-			}
+			int calulation = 0;
+			for (int k = 0; k <= (maskWidth*maskWidth) - 1; k++) {
+				calulation = calulation + ((int)arr[k] * maskValues[k]);
 
-			int arrSom = 0;
-			for (int value : arr) {
-				arrSom = arrSom + value;
 			}
-			calulation = calulation / arrSom;
+			if (devideCal){
+				calulation = calulation / (maskWidth * maskWidth);
+			}
+			
+			if (calulation < 0){
+				calulation = 0;
+			}
+			else if (calulation > 255){
+				calulation = 255;
+			}
+			image2.setPixel(currentWidth + floor(maskWidth / 2), currentHeight + floor(maskWidth / 2), calulation);
+			
 
-			if (calulation > 126) {
-				image2->setPixel(currentWidth + floor(maskWidth/2), currentHight + floor(maskWidth / 2),255);
-			}
-			else image2->setPixel(currentWidth + floor(maskWidth / 2), currentHight + floor(maskWidth / 2), 0);
 		}
 	}
-	
-	return image2;
+	IntensityImage* result = ImageFactory::newIntensityImage(image2);
+
+	return result;
 }

@@ -27,5 +27,5 @@ public:
 	RGB getPixel(int i) const;
 
 private:
-	std::vector<RGB> container;
+	RGB* pixelmap;
 };

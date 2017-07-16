@@ -2,6 +2,7 @@
 #include "PreProcessing.h"
 #include <string>
 #include <math.h>
+#include "ImageFactory.h"
 #include "IntensityImage.h" 
 #include "IntensityImageStudent.h" 
 class Mask
@@ -10,7 +11,7 @@ public:
 	Mask(std::vector<int> maskValues, int maskWidth);
 	~Mask();
 
-	IntensityImageStudent *useMaskOn(const IntensityImage &image);
+	IntensityImage *useMaskOn(const IntensityImage &image, bool devideCall);
 
 private:
 	int currentRow;
