@@ -12,8 +12,6 @@ RGBImageStudent::RGBImageStudent(const RGBImageStudent &other) : RGBImage(other.
 
 
 RGBImageStudent::RGBImageStudent(const int width, const int height) : RGBImage(width, height) {
-	std::cout << "this is called!" << std::endl;
-	std::fflush;
 	int max = height * width;
 	for (int i = 0; i < max; i++){
 		container[i] = RGB();

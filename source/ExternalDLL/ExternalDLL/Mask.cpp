@@ -38,8 +38,6 @@ IntensityImageStudent *Mask::useMaskOn(const IntensityImage & image)
 				trackerY++;
 			}
 
-		
-
 			//Function calulate:
 			int calulation= 0;
 			for (int k = 0;k < 8; k++) {

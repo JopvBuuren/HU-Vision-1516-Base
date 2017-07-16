@@ -9,6 +9,7 @@
 #include "Mask.h"
 #include "SumMask.h"
 #include "ImageFactory.h"
+#include <vector>
 class StudentPreProcessing : public PreProcessing {
 public:
 	IntensityImage * stepToIntensityImage(const RGBImage &image) const;
@@ -28,17 +29,16 @@ private:
 	int method = 3;
 
 	// Default sobel masks
-	std::vector<int> sobelMaskHor = {
-		1, 0, -1,
-		2, 0, -2,
-		1, 0, -1
+	std::vector<int> sobelMaskHor = std::vector<int>{
+			1, 0, -1,
+			2, 0, -2,
+			1, 0, -1
 	};
 	
-	std::vector<int> sobelMaskVer = { 
-		1, 2, 1,
-		0, 0, 0,
-		-1, -2, -1 
+	std::vector<int> sobelMaskVer = std::vector<int>{
+			1, 2, 1,
+			0, 0, 0,
+			-1, -2, -1
 	};
 
-	}
 };
