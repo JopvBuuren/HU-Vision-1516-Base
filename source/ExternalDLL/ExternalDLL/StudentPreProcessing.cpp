@@ -69,7 +69,9 @@ IntensityImage * StudentPreProcessing::stepEdgeDetection(const IntensityImage &i
 			break;
 		case 3:
 			// Sobel
+			myfile << "Line 2" << endl;
 			return stepSobel(image);
+			myfile << "Line 3" << endl;
 			break;
 		case 4:
 			myfile << "Line 2" << endl;
@@ -103,7 +105,13 @@ IntensityImage * StudentPreProcessing::stepThresholding(const IntensityImage &im
 }
 
 IntensityImage * StudentPreProcessing::stepLaplacian(const IntensityImage &image) const {
-	return nullptr;
+	//IntensityImageStudent image2 = image;
+	IntensityImage* image2 = ImageFactory::newIntensityImage(image);
+	int maskWidth = 3;
+	Mask* laplacianMask = new Mask(laplacianMaskVer, maskWidth);
+	image2 = laplacianMask->useMaskOn(*image2, false, true);
+	IntensityImage* result = ImageFactory::newIntensityImage(*image2);
+	return result;
 }
 IntensityImage * StudentPreProcessing::stepGuassian(const IntensityImage &image) const {
 	
@@ -112,18 +120,26 @@ IntensityImage * StudentPreProcessing::stepGuassian(const IntensityImage &image)
 	IntensityImage* image2 = ImageFactory::newIntensityImage(image);
 	int maskWidth = 3;
 	std::vector<int> maskValues = guassianMaskVer;
-	Mask* highpassMask = new Mask(highpassMaskVer,maskWidth);
+	//Mask* highpassMask = new Mask(highpassMaskVer,maskWidth);
 	Mask* gausianMask = new Mask(guassianMaskVer, maskWidth);
-	image2 = gausianMask->useMaskOn(*image2, true);
-	image2 = highpassMask->useMaskOn(*image2, false);
+	
+	image2 = gausianMask->useMaskOn(*image2, true, false);
+	//image2 = highpassMask->useMaskOn(*image2, false, false);
 	IntensityImage* result = ImageFactory::newIntensityImage(*image2);
 	return result;
 }
 
 IntensityImage * StudentPreProcessing::stepSobel(const IntensityImage &image) const {
 	std::cout << "Using Sobel" << std::endl;
+	using namespace std;
+	ofstream myfile;
+	myfile.open("C:/Users/danie/git/HU-Vision-1516-JoDa/source/ExternalDLL/debug3.txt");
+	myfile << "Line 1" << endl;
+	IntensityImage* image2 = ImageFactory::newIntensityImage(image);
 	SumMask* mask = new SumMask(this->sobelMaskHor, this->sobelMaskVer, 3);
-	IntensityImageStudent* student_result = mask->useMaskOn(image);
-	IntensityImage * result = ImageFactory::newIntensityImage(*student_result);
+	myfile << "Line 2" << endl;
+	image2 = mask->useMaskOn(*image2);
+	myfile << "Line 3" << endl;
+	IntensityImage * result = ImageFactory::newIntensityImage(*image2);
 	return result;
 }

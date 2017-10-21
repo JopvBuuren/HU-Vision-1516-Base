@@ -4,13 +4,15 @@
 #include <math.h>
 #include "IntensityImage.h" 
 #include "IntensityImageStudent.h" 
+#include "ImageFactory.h"
+#include "ImageIO.h"
 class Mask
 {
 public:
 	Mask(std::vector<int> maskValues, int maskWidth);
 	~Mask();
 
-	IntensityImageStudent *useMaskOn(const IntensityImage &image);
+	IntensityImage *useMaskOn(const IntensityImage &image, bool divideCAl, bool isLaplacian);
 
 private:
 	int currentRow;
