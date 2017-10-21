@@ -9,7 +9,9 @@
 #include "Mask.h"
 #include "SumMask.h"
 #include "ImageFactory.h"
+#include <vector>
 #include "ImageIO.h"
+
 class StudentPreProcessing : public PreProcessing {
 public:
 	IntensityImage * stepToIntensityImage(const RGBImage &image) const;
@@ -57,5 +59,5 @@ private:
 		0, -1, 0
 
 	};
-
 };
+

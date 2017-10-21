@@ -16,7 +16,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
@@ -104,6 +104,7 @@
     <ClInclude Include="StudentExtraction.h" />
     <ClInclude Include="StudentLocalization.h" />
     <ClInclude Include="StudentPreProcessing.h" />
+    <ClInclude Include="SumMask.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DefaultExtraction.cpp" />
@@ -132,6 +133,7 @@
     <ClCompile Include="StudentExtraction.cpp" />
     <ClCompile Include="StudentLocalization.cpp" />
     <ClCompile Include="StudentPreProcessing.cpp" />
+    <ClCompile Include="SumMask.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

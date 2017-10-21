@@ -7,44 +7,7 @@ IntensityImage * StudentPreProcessing::stepToIntensityImage(const RGBImage &imag
 }
 
 IntensityImage * StudentPreProcessing::stepScaleImage(const IntensityImage &image) const {
-	//if ((200 * 200) > (image.getWidth() * image.getHeight())) {
-	//	IntensityImage * result = ImageFactory::newIntensityImage(image);
-	//	return result;
-	//}
-	IntensityImage * result = ImageFactory::newIntensityImage(200, image.getHeight() * ((double)200 / (double)image.getWidth()));
-
-	if (true) {	//Using backward mapping
-		for (int y = 0; y < result->getHeight(); y++) {
-			for (int x = 0; x < result->getWidth(); x++) {
-
-				if (true) {//First order
-					double scaled_x = (double)(x * image.getWidth()) / (double)result->getWidth();
-					double scaled_y = (double)(y * image.getHeight()) / (double)result->getHeight();
-					//std::cout << result->getWidth() << "  " << scaled_y << "\n";
-					//result->setPixel(x, y, ImageUtils::interpolate_first_order(&image, scaled_x, scaled_y));
-				}
-				else { //zero order (nearest neighbour)
-					double scaled_x = (double)(x * image.getWidth()) / (double)result->getWidth();
-					double scaled_y = (double)(y * image.getHeight()) / (double)result->getHeight();
-					result->setPixel(x, y, image.getPixel(floor(scaled_x), floor(scaled_y)));
-				}
-			}
-		}
-	}
-	else { //Forward mapping
-		for (int y = 0; y < image.getHeight(); y++) {
-			for (int x = 0; x < image.getWidth(); x++) {
-
-				int scaled_x = floor((x * result->getWidth()) / image.getWidth());
-				int scaled_y = floor((y * result->getHeight()) / image.getHeight());
-				result->setPixel(scaled_x, scaled_y, image.getPixel(x, y));
-
-			}
-		}
-	}
-
-	return result;
-
+	return nullptr;
 }
 
 /* Swicth on methods, defined in header (config file would prevent rebuild)
@@ -79,7 +42,7 @@ IntensityImage * StudentPreProcessing::stepEdgeDetection(const IntensityImage &i
 			myfile << "Line 3" << endl;
 			return result; break;
 		default:
-			std::cout << "Unknown chosen method: " << method << "!" << std::endl;
+			std::cerr << "Unknown chosen method: " << method << "!" << std::endl;
 			return nullptr;
 			break;
 	}
@@ -130,12 +93,14 @@ IntensityImage * StudentPreProcessing::stepGuassian(const IntensityImage &image)
 }
 
 IntensityImage * StudentPreProcessing::stepSobel(const IntensityImage &image) const {
+
 	std::cout << "Using Sobel" << std::endl;
 	using namespace std;
 	ofstream myfile;
 	myfile.open("C:/Users/danie/git/HU-Vision-1516-JoDa/source/ExternalDLL/debug3.txt");
 	myfile << "Line 1" << endl;
 	IntensityImage* image2 = ImageFactory::newIntensityImage(image);
+
 	SumMask* mask = new SumMask(this->sobelMaskHor, this->sobelMaskVer, 3);
 	myfile << "Line 2" << endl;
 	image2 = mask->useMaskOn(*image2);
