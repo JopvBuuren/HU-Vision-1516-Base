@@ -54,9 +54,9 @@ private:
 
 	};
 	std::vector<int> laplacianMaskVer = std::vector<int>{
-		0, -1, 0,
-		-1, 4, -1,
-		0, -1, 0
+		-1, -1, -1,
+		-1, 8, -1,
+		-1, -1, -1
 
 	};
 };

@@ -29,11 +29,13 @@ IntensityImage *Mask::useMaskOn(const IntensityImage & image, bool divideCal, bo
 
 	for (int currentHeight = 0; currentHeight < imageHeight; currentHeight++)
 	{
-		if ((currentHeight + maskWidth)> imageHeight) {
+		if ((currentHeight + maskWidth)> imageHeight)
+		{
 			break;
 		}
 
-		for (int currentWidth = 0; currentWidth < imageWidth; currentWidth++) {
+		for (int currentWidth = 0; currentWidth < imageWidth; currentWidth++)
+		{
 
 			if ((currentWidth + maskWidth) > imageWidth) {
 				break;
@@ -41,7 +43,8 @@ IntensityImage *Mask::useMaskOn(const IntensityImage & image, bool divideCal, bo
 			int trackerY = 0;
 			int arr[9];
 			cout << " ch: " << currentHeight << " cw: " << currentWidth << endl;
-			for (int i = 0; i < maskWidth; i++) {
+			for (int i = 0; i < maskWidth; i++)
+			{
 				arr[(i * maskWidth)] = image.getPixel(currentWidth, currentHeight + trackerY);
 				arr[(i * maskWidth) + 1] = image.getPixel(currentWidth + 1, currentHeight + trackerY);
 				arr[(i * maskWidth) + 2] = image.getPixel(currentWidth + 2, currentHeight + trackerY);
@@ -51,7 +54,8 @@ IntensityImage *Mask::useMaskOn(const IntensityImage & image, bool divideCal, bo
 			//Function calulate:
 			int calulation = 0;
 			int totalSomMask = 0;
-			for (int k = 0; k <= (maskWidth*maskWidth) - 1; k++) {
+			for (int k = 0; k <= (maskWidth*maskWidth) - 1; k++)
+			{
 				calulation = calulation + ((int)arr[k] * maskValues[k]);
 				totalSomMask = totalSomMask + maskValues[k];
 				//myfile << "Cal: " << calulation << "Nr:" << (int)arr[k] << endl;
@@ -61,7 +65,7 @@ IntensityImage *Mask::useMaskOn(const IntensityImage & image, bool divideCal, bo
 			}
 			if (isLaplacian = true){
 				calulation = calulation + 128;
-			
+			}
 			if (calulation <= 0){
 				calulation = 0;
 			}
@@ -72,9 +76,10 @@ IntensityImage *Mask::useMaskOn(const IntensityImage & image, bool divideCal, bo
 			//myfile << "EndCal: " << calulation << endl;
 
 			image2.setPixel(currentWidth + floor(maskWidth / 2), currentHeight + floor(maskWidth / 2), calulation);
-			}
+		}
 	}
 	IntensityImage* result = ImageFactory::newIntensityImage(image2);
-
+	
 	return result;
+	
 }
