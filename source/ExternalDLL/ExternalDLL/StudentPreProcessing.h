@@ -20,6 +20,7 @@ public:
 	IntensityImage * stepThresholding(const IntensityImage &image) const;
 
 	IntensityImage * stepLaplacian(const IntensityImage &image) const;
+	IntensityImage * stepHighPass(const IntensityImage &image) const;
 	IntensityImage * stepGuassian(const IntensityImage &image) const;
 	IntensityImage * stepSobel(const IntensityImage &image) const;
 private:
@@ -29,7 +30,7 @@ private:
 		3	Sobel
 	*/
 	int method = 2;
-	int treshhold = 128;
+	int treshhold = 140;
 	// Default sobel masks
 	std::vector<int> sobelMaskHor = std::vector<int>{
 		1, 0, -1,

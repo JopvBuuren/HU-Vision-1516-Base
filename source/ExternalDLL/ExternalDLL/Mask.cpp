@@ -19,14 +19,12 @@ IntensityImage *Mask::useMaskOn(const IntensityImage & image, bool divideCal, bo
 	using namespace std;
 	ofstream myfile;
 	myfile.open("C:/Users/danie/git/HU-Vision-1516-JoDa/source/ExternalDLL/debug.txt");
-
+	IntensityImageStudent image2(image);
 
 	int imageWidth = image.getWidth();
 	int imageHeight = image.getHeight();
 
-
-	IntensityImageStudent image2(image);
-
+	
 	for (int currentHeight = 0; currentHeight < imageHeight; currentHeight++)
 	{
 		if ((currentHeight + maskWidth)> imageHeight)
@@ -42,7 +40,8 @@ IntensityImage *Mask::useMaskOn(const IntensityImage & image, bool divideCal, bo
 			}
 			int trackerY = 0;
 			int arr[9];
-			cout << " ch: " << currentHeight << " cw: " << currentWidth << endl;
+			
+
 			for (int i = 0; i < maskWidth; i++)
 			{
 				arr[(i * maskWidth)] = image.getPixel(currentWidth, currentHeight + trackerY);
@@ -52,30 +51,44 @@ IntensityImage *Mask::useMaskOn(const IntensityImage & image, bool divideCal, bo
 			}
 
 			//Function calulate:
-			int calulation = 0;
+			int calculation = 0;
 			int totalSomMask = 0;
 			for (int k = 0; k <= (maskWidth*maskWidth) - 1; k++)
 			{
-				calulation = calulation + ((int)arr[k] * maskValues[k]);
+				calculation = calculation + ((int)arr[k] * maskValues[k]);
 				totalSomMask = totalSomMask + maskValues[k];
-				//myfile << "Cal: " << calulation << "Nr:" << (int)arr[k] << endl;
+				//myfile << "Cal: " << calculation << "Nr:" << (int)arr[k] << endl;
 			}
 			if (divideCal){
-				calulation = floor(calulation / totalSomMask);
+				calculation = floor(calculation / totalSomMask);
 			}
-			if (isLaplacian = true){
-				calulation = calulation + 128;
+			if (isLaplacian){
+				calculation = calculation + 195;
 			}
-			if (calulation <= 0){
-				calulation = 0;
+			if (calculation <= 0){
+				calculation = 0;
 			}
-			else if (calulation >= 255){
-				calulation = 255;
+			else if (calculation >= 255){
+				calculation = 255;
 			}
-			image2.setPixel(currentWidth + floor(maskWidth / 2), currentHeight + floor(maskWidth / 2), calulation);
-			//myfile << "EndCal: " << calulation << endl;
+			image2.setPixel(currentWidth + floor(maskWidth / 2), currentHeight + floor(maskWidth / 2), calculation);
+		}
 
-			image2.setPixel(currentWidth + floor(maskWidth / 2), currentHeight + floor(maskWidth / 2), calulation);
+	}
+	cout << "IW: "<< imageWidth << " IH: " << imageHeight;
+	//Making the witdh egde white
+	for (int j = 0; j <= 3; j++){
+		for (int i = 0; i <= imageWidth; i++){
+
+			image2.setPixel(i, j, 0);
+			image2.setPixel(i, imageHeight -j, 0);
+			cout << i << endl;
+		}
+		//Making the height egde white
+		for (int i = 0; i <= imageHeight; i++){
+			image2.setPixel(j, i, 0);
+			image2.setPixel(imageWidth - j, i, 0);
+
 		}
 	}
 	IntensityImage* result = ImageFactory::newIntensityImage(image2);
