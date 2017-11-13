@@ -27,10 +27,13 @@ private:
 	/* current method
 		1	Laplacian
 		2	Laplacian Guassian
-		3	Sobel
+		3   Highpass
+		4   Highpass Gaussian
+		5	Sobel
+		6   Sobel + Gaussian
 	*/
-	int method = 2;
-	int treshhold = 140;
+	int method = 3;
+	int treshhold = 80;
 	// Default sobel masks
 	std::vector<int> sobelMaskHor = std::vector<int>{
 		1, 0, -1,

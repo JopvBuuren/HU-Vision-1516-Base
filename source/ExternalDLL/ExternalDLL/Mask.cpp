@@ -63,7 +63,7 @@ IntensityImage *Mask::useMaskOn(const IntensityImage & image, bool divideCal, bo
 				calculation = floor(calculation / totalSomMask);
 			}
 			if (isLaplacian){
-				calculation = calculation + 195;
+				calculation = calculation + laplacianCorrection;
 			}
 			if (calculation <= 0){
 				calculation = 0;

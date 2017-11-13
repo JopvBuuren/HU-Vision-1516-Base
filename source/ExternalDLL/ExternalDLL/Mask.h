@@ -19,6 +19,7 @@ private:
 	int currentRow;
 	std::vector<int> maskValues;
 	int maskWidth;
+	int laplacianCorrection = 80;
 
 };
 

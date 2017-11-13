@@ -31,15 +31,21 @@ IntensityImage * StudentPreProcessing::stepEdgeDetection(const IntensityImage &i
 			return stepLaplacian(*stepGuassian(image));
 			break;
 		case 3:
+			// Highpass
+			result = stepHighPass(image);
+			return result; break;
+		case 4:
+			// Highpass + Gaussian
+			result = stepHighPass(*stepGuassian(image));
+			return result; break;
+		case 5:
 			// Sobel
 			return stepSobel(image);
 			break;
-		case 4:
-			result = stepGuassian(image);
-			return result; break;
-		case 5:
-			result = stepHighPass(*stepGuassian(image));
-			return result; break;
+		case 6: 
+			// Sobel + Gaussian
+			return stepSobel(*stepGuassian(image));
+			break;
 		default:
 			std::cerr << "Unknown chosen method: " << method << "!" << std::endl;
 			return nullptr;
