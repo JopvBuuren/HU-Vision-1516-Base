@@ -20,11 +20,11 @@ int main(int argc, char * argv[]) {
 	//ImageFactory::setImplementation(ImageFactory::STUDENT);
 
 
-	ImageIO::debugFolder = "test/1";
+	ImageIO::debugFolder = "D:\\Jop\ van\ Buuren\\Documents\\Hogeschool\\Vakken\\Vision\\HU-Vision-1516-JoDa\\testsets\\Set\ A\\TestSet\ Images";
 	ImageIO::isInDebugMode = true; //If set to false the ImageIO class will skip any image save function calls
 	
 	RGBImage * input = ImageFactory::newRGBImage();
-	if (!ImageIO::loadImage("../female-2.png", *input)) {
+	if (!ImageIO::loadImage("D:\\Jop\ van\ Buuren\\Documents\\Hogeschool\\Vakken\\Vision\\HU-Vision-1516-JoDa\\testsets\\Set\ A\\TestSet\ Images\\male-1.png", *input)) {
 		std::cout << "Image could not be loaded!" << std::endl;
 		char buffer[1000];
 		GetModuleFileName(NULL, buffer, 1000);

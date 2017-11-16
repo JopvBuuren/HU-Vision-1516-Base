@@ -4,6 +4,7 @@
 #include <math.h>
 #include "IntensityImage.h" 
 #include "IntensityImageStudent.h" 
+using namespace std;
 class SumMask
 {
 public:

@@ -28,7 +28,7 @@ private:
 		2	Laplacian Guassian
 		3	Sobel
 	*/
-	int method = 4;
+	int method = 3;
 	int treshhold = 40;
 	// Default sobel masks
 	std::vector<int> sobelMaskHor = std::vector<int>{

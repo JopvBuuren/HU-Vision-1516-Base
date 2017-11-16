@@ -1,4 +1,6 @@
 #include "SumMask.h"
+#include <iostream>
+#include <fstream>
 
 SumMask::SumMask(const std::vector<int> hMask, const std::vector<int> vMask, int maskWidth)
 {
@@ -29,10 +31,14 @@ SumMask::~SumMask()
 }
 
 IntensityImageStudent *SumMask::useMaskOn(const IntensityImage & image){
+	using namespace std;
+	ofstream myfile;
+	myfile.open("C:/Users/Jop van Buuren/Documents/text1.txt");
 	int imageWidth = image.getWidth();
 	int imageHeight = image.getHeight();
 
 	IntensityImageStudent * image2 = new IntensityImageStudent();
+	image2->set(imageWidth, imageHeight);
 	for (int currentHeight = 0; currentHeight < imageHeight; currentHeight++)
 	{
 		if ((currentHeight + maskWidth)> imageHeight) {
@@ -53,16 +59,23 @@ IntensityImageStudent *SumMask::useMaskOn(const IntensityImage & image){
 					int p = y * maskWidth + x;
 					calx = calx + (v * horizontalMask[p]);
 					caly = caly + (v * verticalMask[p]);
+					myfile << "calx: " << calx << ", caly:" << caly << std::endl;
 				}
 			}
 
-			if ((abs(calx) + abs(caly)) > threshold) {
-				image2->setPixel(currentWidth + floor(maskWidth / 2), currentHeight + floor(maskWidth / 2), 255);
-			}else{
+			//int value = (abs(calx) + abs(caly));
+			int value = sqrt(calx*calx + caly*caly);
+			if (value > 100){
 				image2->setPixel(currentWidth + floor(maskWidth / 2), currentHeight + floor(maskWidth / 2), 0);
 			}
+			else{
+				image2->setPixel(currentWidth + floor(maskWidth / 2), currentHeight + floor(maskWidth / 2), 255);
+			}
+
+			
 		}
 	}
+
 
 	return image2;
 }
