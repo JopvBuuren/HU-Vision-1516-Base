@@ -20,21 +20,28 @@ public:
 	IntensityImage * stepThresholding(const IntensityImage &image) const;
 
 	IntensityImage * stepLaplacian(const IntensityImage &image) const;
+	IntensityImage * stepHighPass(const IntensityImage &image) const;
 	IntensityImage * stepGuassian(const IntensityImage &image) const;
 	IntensityImage * stepSobel(const IntensityImage &image) const;
 private:
 	/* current method
 		1	Laplacian
 		2	Laplacian Guassian
-		3	Sobel
+		3   Highpass
+		4   Highpass Gaussian
+		5	Sobel
+		6   Sobel + Gaussian
 	*/
-	int method = 3;
+	int method = 5;
+
 	int treshhold = 40;
+
 	// Default sobel masks
 	std::vector<int> sobelMaskHor = std::vector<int>{
 		1, 0, -1,
 		2, 0, -2,
-		1, 0, -1 };
+		1, 0, -1 
+	};
 	
 	std::vector<int> sobelMaskVer = std::vector<int>{
 		1, 2, 1,
@@ -42,14 +49,21 @@ private:
 		-1, -2, -1 
 	};
 	std::vector<int> guassianMaskVer = std::vector<int>{
-		1,2, 1,
+		1, 2, 1,
 		2, 4, 2,
 		1, 2, 1
 	};
 	std::vector<int> highpassMaskVer = std::vector<int>{
+		0, 9, 0,
+		9, -36, 9,
+		0, 9, 0
+
+	};
+	std::vector<int> laplacianMaskVer = std::vector<int>{
 		-1, -1, -1,
 		-1, 8, -1,
 		-1, -1, -1
+
 	};
 };
 

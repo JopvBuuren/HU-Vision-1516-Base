@@ -66,16 +66,14 @@ IntensityImageStudent *SumMask::useMaskOn(const IntensityImage & image){
 			//int value = (abs(calx) + abs(caly));
 			int value = sqrt(calx*calx + caly*caly);
 			if (value > 100){
-				image2->setPixel(currentWidth + floor(maskWidth / 2), currentHeight + floor(maskWidth / 2), 0);
+				image2->setPixel(currentWidth + floor(maskWidth / 2), currentHeight + floor(maskWidth / 2), 255);
 			}
 			else{
-				image2->setPixel(currentWidth + floor(maskWidth / 2), currentHeight + floor(maskWidth / 2), 255);
+				image2->setPixel(currentWidth + floor(maskWidth / 2), currentHeight + floor(maskWidth / 2), 0);
 			}
 
 			
 		}
 	}
-
-
 	return image2;
 }

@@ -31,16 +31,22 @@ IntensityImage * StudentPreProcessing::stepEdgeDetection(const IntensityImage &i
 			return stepLaplacian(*stepGuassian(image));
 			break;
 		case 3:
+			// Highpass
+			result = stepHighPass(image);
+			return result; break;
+		case 4:
+			// Highpass + Gaussian
+			result = stepHighPass(*stepGuassian(image));
+			return result; break;
+		case 5:
 			// Sobel
 			myfile << "Start test" << std::endl;
 			return stepSobel(image);
 			myfile << "Stop test" << std::endl;
 			break;
-		case 4:
-			//myfile << "Line 2" << endl;
-			result = stepGuassian(image);
-			//myfile << "Line 3" << endl;
-			return result; 
+		case 6: 
+			// Sobel + Gaussian
+			return stepSobel(*stepGuassian(image));
 			break;
 		default:
 			std::cerr << "Unknown chosen method: " << method << "!" << std::endl;
@@ -69,22 +75,35 @@ IntensityImage * StudentPreProcessing::stepThresholding(const IntensityImage &im
 }
 
 IntensityImage * StudentPreProcessing::stepLaplacian(const IntensityImage &image) const {
-	return nullptr;
+	IntensityImage* image2 = ImageFactory::newIntensityImage(image);
+	int maskWidth = 3;
+	Mask* laplacianMask = new Mask(laplacianMaskVer, maskWidth);
+	image2 = laplacianMask->useMaskOn(*image2, false, true);
+	IntensityImage* result = ImageFactory::newIntensityImage(*image2);
+	return result;
 }
+
+IntensityImage * StudentPreProcessing::stepHighPass(const IntensityImage &image) const {
+	IntensityImage* image2 = ImageFactory::newIntensityImage(image);
+	int maskWidth = 3;
+	Mask* laplacianMask = new Mask(highpassMaskVer, maskWidth);
+	image2 = laplacianMask->useMaskOn(*image2, false, false);
+	IntensityImage* result = ImageFactory::newIntensityImage(*image2);
+	return result;
+}
+
 IntensityImage * StudentPreProcessing::stepGuassian(const IntensityImage &image) const {
-	//IntensityImageStudent image2 = image;
 	IntensityImage* image2 = ImageFactory::newIntensityImage(image);
 	int maskWidth = 3;
 	std::vector<int> maskValues = guassianMaskVer;
-	Mask* highpassMask = new Mask(highpassMaskVer,maskWidth);
 	Mask* gausianMask = new Mask(guassianMaskVer, maskWidth);
-	image2 = gausianMask->useMaskOn(*image2, true);
-	image2 = highpassMask->useMaskOn(*image2, false);
+	image2 = gausianMask->useMaskOn(*image2, true, false);
 	IntensityImage* result = ImageFactory::newIntensityImage(*image2);
 	return result;
 }
 
 IntensityImage * StudentPreProcessing::stepSobel(const IntensityImage &image) const {
+
 	myfile << "so far" << std::endl;
 	SumMask * mask = new SumMask(this->sobelMaskHor, this->sobelMaskVer, 3);
 	myfile << "This far" << std::endl;
@@ -92,5 +111,6 @@ IntensityImage * StudentPreProcessing::stepSobel(const IntensityImage &image) co
 	myfile << "here realy" << std::endl;
 	IntensityImage * result = ImageFactory::newIntensityImage(*student_result);
 	myfile << "hacks" << std::endl;
+
 	return result;
 }

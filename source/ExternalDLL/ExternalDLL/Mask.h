@@ -5,18 +5,21 @@
 #include "ImageFactory.h"
 #include "IntensityImage.h" 
 #include "IntensityImageStudent.h" 
+#include "ImageFactory.h"
+#include "ImageIO.h"
 class Mask
 {
 public:
 	Mask(std::vector<int> maskValues, int maskWidth);
 	~Mask();
+	IntensityImage *useMaskOn(const IntensityImage &image, bool divideCAl, bool isLaplacian);
 
-	IntensityImage *useMaskOn(const IntensityImage &image, bool devideCall);
 
 private:
 	int currentRow;
 	std::vector<int> maskValues;
 	int maskWidth;
+	int laplacianCorrection = 80;
 
 };
 
