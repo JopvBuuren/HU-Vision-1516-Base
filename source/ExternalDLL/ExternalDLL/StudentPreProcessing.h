@@ -32,7 +32,7 @@ private:
 		5	Sobel
 		6   Sobel + Gaussian
 	*/
-	int method = 5;
+	int method = 6;
 
 	int treshhold = 40;
 

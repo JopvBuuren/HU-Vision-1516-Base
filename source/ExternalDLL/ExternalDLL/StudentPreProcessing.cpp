@@ -16,10 +16,6 @@ IntensityImage * StudentPreProcessing::stepScaleImage(const IntensityImage &imag
 	3	Sobel
 */
 IntensityImage * StudentPreProcessing::stepEdgeDetection(const IntensityImage &image) const {
-	using namespace std;
-	
-	myfile.open("C:/Users/Jop van Buuren/Documents/text.txt");
-	myfile << "Line 1" << endl;
 	IntensityImage* result;
 	switch (method){
 		case 1:
@@ -40,16 +36,14 @@ IntensityImage * StudentPreProcessing::stepEdgeDetection(const IntensityImage &i
 			return result; break;
 		case 5:
 			// Sobel
-			myfile << "Start test" << std::endl;
 			return stepSobel(image);
-			myfile << "Stop test" << std::endl;
 			break;
 		case 6: 
 			// Sobel + Gaussian
 			return stepSobel(*stepGuassian(image));
 			break;
 		default:
-			std::cerr << "Unknown chosen method: " << method << "!" << std::endl;
+
 			return nullptr;
 			break;
 	}
@@ -103,14 +97,8 @@ IntensityImage * StudentPreProcessing::stepGuassian(const IntensityImage &image)
 }
 
 IntensityImage * StudentPreProcessing::stepSobel(const IntensityImage &image) const {
-
-	myfile << "so far" << std::endl;
 	SumMask * mask = new SumMask(this->sobelMaskHor, this->sobelMaskVer, 3);
-	myfile << "This far" << std::endl;
 	IntensityImageStudent * student_result = mask->useMaskOn(image);
-	myfile << "here realy" << std::endl;
 	IntensityImage * result = ImageFactory::newIntensityImage(*student_result);
-	myfile << "hacks" << std::endl;
-
 	return result;
 }

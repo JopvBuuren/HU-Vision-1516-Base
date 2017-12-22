@@ -8,7 +8,7 @@ SumMask::SumMask(const std::vector<int> hMask, const std::vector<int> vMask, int
 	this->verticalMask = vMask;
 	this->maskWidth = maskWidth;
 	threshold = floor(
-		(3/4) * (
+		(1/16) * (
 			abs(getHighestValue(hMask)) + abs(getHighestValue(vMask)
 		)
 	));
@@ -31,9 +31,6 @@ SumMask::~SumMask()
 }
 
 IntensityImageStudent *SumMask::useMaskOn(const IntensityImage & image){
-	using namespace std;
-	ofstream myfile;
-	myfile.open("C:/Users/Jop van Buuren/Documents/text1.txt");
 	int imageWidth = image.getWidth();
 	int imageHeight = image.getHeight();
 
@@ -59,20 +56,31 @@ IntensityImageStudent *SumMask::useMaskOn(const IntensityImage & image){
 					int p = y * maskWidth + x;
 					calx = calx + (v * horizontalMask[p]);
 					caly = caly + (v * verticalMask[p]);
-					myfile << "calx: " << calx << ", caly:" << caly << std::endl;
 				}
 			}
 
 			//int value = (abs(calx) + abs(caly));
 			int value = sqrt(calx*calx + caly*caly);
-			if (value > 100){
+			std::cout << "main function: " << value;
+			if (value > 130){
 				image2->setPixel(currentWidth + floor(maskWidth / 2), currentHeight + floor(maskWidth / 2), 255);
 			}
 			else{
 				image2->setPixel(currentWidth + floor(maskWidth / 2), currentHeight + floor(maskWidth / 2), 0);
 			}
+		}
 
-			
+	}
+	//Making the witdh egde white
+	for (int j = 0; j <= 3; j++){
+		for (int i = 0; i <= imageWidth; i++){
+			image2->setPixel(i, j, 0);
+			image2->setPixel(i, imageHeight - j, 0);
+		}
+		//Making the height egde white
+		for (int i = 0; i <= imageHeight; i++){
+			image2->setPixel(j, i, 0);
+			image2->setPixel(imageWidth - j, i, 0);
 		}
 	}
 	return image2;
