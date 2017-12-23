@@ -7,11 +7,7 @@ SumMask::SumMask(const std::vector<int> hMask, const std::vector<int> vMask, int
 	this->horizontalMask = hMask;
 	this->verticalMask = vMask;
 	this->maskWidth = maskWidth;
-	threshold = floor(
-		(1/16) * (
-			abs(getHighestValue(hMask)) + abs(getHighestValue(vMask)
-		)
-	));
+	threshold = 130;
 }
 
 int SumMask::getHighestValue(std::vector<int> mask){
@@ -61,11 +57,9 @@ IntensityImageStudent *SumMask::useMaskOn(const IntensityImage & image){
 
 			//int value = (abs(calx) + abs(caly));
 			int value = sqrt(calx*calx + caly*caly);
-			std::cout << "main function: " << value;
-			if (value > 130){
+			if (value > threshold){
 				image2->setPixel(currentWidth + floor(maskWidth / 2), currentHeight + floor(maskWidth / 2), 255);
-			}
-			else{
+			}else{
 				image2->setPixel(currentWidth + floor(maskWidth / 2), currentHeight + floor(maskWidth / 2), 0);
 			}
 		}

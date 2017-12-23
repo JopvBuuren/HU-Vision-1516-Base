@@ -76,6 +76,7 @@ IntensityImage *Mask::useMaskOn(const IntensityImage & image, bool divideCal, bo
 
 	}
 	cout << "IW: "<< imageWidth << " IH: " << imageHeight;
+	/* Comment out code below to make gaussian Sobel work, -Jop van Buuren*/
 	//Making the witdh egde white
 	for (int j = 0; j <= 3; j++){
 		for (int i = 0; i <= imageWidth; i++){
